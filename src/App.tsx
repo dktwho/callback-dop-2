@@ -33,6 +33,11 @@ function App() {
         setTodos([])
     }
 
+    const addTodoHandler = () => {
+        let newTodos = {userId: 201,id: 999,title: 'new',completed: false}
+        setTodos([newTodos,...todos])
+    }
+
 
     let result = todos.map(todo => {
         return (
@@ -45,14 +50,14 @@ function App() {
 
     return (
         <div className="App">
+            <div>
+                <Input/>
+                <Button name={'Add'} callback={addTodoHandler} />
+            </div>
 
-            {/*<button onClick={getData}>get data</button>*/}
-            {/*<button onClick={removeData}>remove data</button>*/}
-            <div><Input /> </div>
             <Button name={'Show Todos'} callback={getData} />
             <Button name={'Remove Todos'} callback={removeData} />
             <ol>{result}</ol>
-
         </div>
     );
 }
