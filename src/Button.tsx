@@ -4,8 +4,7 @@ type PropsType = {
     name: string
     callback: () => void
 }
-export const  Button = ({name, callback}: PropsType ) => {
-
+export const Button = ({name, callback}: PropsType) => {
     const onClickHandler = () => {
         callback()
     }
