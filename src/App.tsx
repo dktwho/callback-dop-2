@@ -12,21 +12,23 @@ type TodosType = {
 function App() {
     let [todos, setTodos] = useState<TodosType[]>([])
 
-    const getData = () => {
+    const getDataFromServer = () => {
         fetch('https://jsonplaceholder.typicode.com/todos')
             .then(res => res.json())
             .then(json => setTodos(json))
     }
 
-    const removeData = () => {
-    setTodos([])
+    useEffect(() => {
+        getDataFromServer()
+    }, [])
+
+    const getData = () => {
+        getDataFromServer()
     }
 
-    // useEffect(() => {
-    //     fetch('https://jsonplaceholder.typicode.com/todos')
-    //         .then(res => res.json())
-    //         .then(json => setTodos(json))
-    // }, [])
+    const removeData = () => {
+        setTodos([])
+    }
 
 
     let result = todos.map(todo => {
