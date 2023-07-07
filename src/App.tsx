@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
+
+type TodosType = {
+    userId: number,
+    id: number,
+    title: string,
+    completed: boolean
+}
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    let [todos, setTodos] = useState<TodosType[]>([])
+
+    const getData = () => {
+        fetch('https://jsonplaceholder.typicode.com/todos')
+            .then(res => res.json())
+            .then(json => setTodos(json))
+    }
+
+    const removeData = () => {
+    setTodos([])
+    }
+
+    // useEffect(() => {
+    //     fetch('https://jsonplaceholder.typicode.com/todos')
+    //         .then(res => res.json())
+    //         .then(json => setTodos(json))
+    // }, [])
+
+
+    let result = todos.map(todo => {
+        return (
+            <li key={todo.id}>
+                <span>{todo.title}</span>
+                <input type="checkbox" checked={todo.completed} readOnly/>
+            </li>
+        )
+    })
+
+    return (
+        <div className="App">
+            <button onClick={getData}>get data</button>
+            <button onClick={removeData}>remove data</button>
+            <ol>{result}</ol>
+
+        </div>
+    );
 }
 
 export default App;
