@@ -13,6 +13,7 @@ type TodosType = {
 
 function App() {
     let [todos, setTodos] = useState<TodosType[]>([])
+    const [newTitle, setNewTitle] = useState ('')
     const API_URL_TODOS = 'https://jsonplaceholder.typicode.com/todos'
 
     const getDataFromServer = () => {
@@ -34,8 +35,9 @@ function App() {
     }
 
     const addTodoHandler = () => {
-        let newTodos = {userId: 201,id: 999,title: 'new',completed: false}
+        let newTodos = {userId: todos.length + 1,id: todos.length + 1,title: newTitle,completed: false}
         setTodos([newTodos,...todos])
+        setNewTitle('')
     }
 
 
@@ -51,8 +53,8 @@ function App() {
     return (
         <div className="App">
             <div>
-                <Input/>
-                <Button name={'Add'} callback={addTodoHandler} />
+                <Input newTitle={newTitle} setNewTitle={setNewTitle}/>
+                <Button name={'Add'} callback={() => addTodoHandler()} />
             </div>
 
             <Button name={'Show Todos'} callback={getData} />
