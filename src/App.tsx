@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import {Input} from "./Input";
 import {Button} from "./Button";
@@ -12,9 +12,17 @@ type TodosType = {
 }
 
 function App() {
-    let [todos, setTodos] = useState<TodosType[]>([])
-    const [newTitle, setNewTitle] = useState ('')
+    const [todos, setTodos] = useState<TodosType[]>([])
+    // const [newTitle, setNewTitle] = useState ('')
+
+    const newTitle = useRef<HTMLInputElement>(null)
+
+
     const API_URL_TODOS = 'https://jsonplaceholder.typicode.com/todos'
+
+
+
+
 
     const getDataFromServer = () => {
         fetch(API_URL_TODOS)
@@ -35,9 +43,11 @@ function App() {
     }
 
     const addTodoHandler = () => {
-        let newTodos = {userId: todos.length + 1,id: todos.length + 1,title: newTitle,completed: false}
-        setTodos([newTodos,...todos])
-        setNewTitle('')
+        if(newTitle.current) {
+            let newTodos = {userId: todos.length + 1,id: todos.length + 1,title: newTitle.current.value,completed: false}
+            setTodos([newTodos,...todos])
+            newTitle.current.value = ''
+        }
     }
 
 
@@ -53,7 +63,8 @@ function App() {
     return (
         <div className="App">
             <div>
-                <Input newTitle={newTitle} setNewTitle={setNewTitle}/>
+                {/*<Input newTitle={newTitle} setNewTitle={setNewTitle}/>*/}
+                <Input newTitle={newTitle} />
                 <Button name={'Add'} callback={() => addTodoHandler()} />
             </div>
 
