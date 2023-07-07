@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import {Input} from "./Input";
+import {Button} from "./Button";
 
 
 type TodosType = {
@@ -11,9 +13,10 @@ type TodosType = {
 
 function App() {
     let [todos, setTodos] = useState<TodosType[]>([])
+    const API_URL_TODOS = 'https://jsonplaceholder.typicode.com/todos'
 
     const getDataFromServer = () => {
-        fetch('https://jsonplaceholder.typicode.com/todos')
+        fetch(API_URL_TODOS)
             .then(res => res.json())
             .then(json => setTodos(json))
     }
@@ -42,8 +45,12 @@ function App() {
 
     return (
         <div className="App">
-            <button onClick={getData}>get data</button>
-            <button onClick={removeData}>remove data</button>
+
+            {/*<button onClick={getData}>get data</button>*/}
+            {/*<button onClick={removeData}>remove data</button>*/}
+            <div><Input /> </div>
+            <Button name={'Show Todos'} callback={getData} />
+            <Button name={'Remove Todos'} callback={removeData} />
             <ol>{result}</ol>
 
         </div>
